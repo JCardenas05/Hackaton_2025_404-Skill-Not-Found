@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { Selection } from "./pages/selection";
 import { Records } from "./pages/records";
 import { SignUp } from "./pages/signup";
+import { Registros } from "./pages/Registros/Registros";
 
 function App() {
   return (
@@ -20,8 +21,8 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/selection" element={<Selection />} />
-              <Route path="/records" element={<Records />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/records" element={<Registros />} />
             </Routes>
           </div>
         </Router>

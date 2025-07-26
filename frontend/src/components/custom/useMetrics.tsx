@@ -36,7 +36,7 @@ export function useMetrics() {
       .select('tema,total')
       .eq('fecha', kpiRow.fecha)
       .order('total', { ascending: false })
-      .limit(5);
+      .limit(100);
 
     if (topicsErr) {
       console.error('Error obteniendo kpi_topics:', topicsErr);
