@@ -15,14 +15,15 @@ interface ChatInputProps {
 
 const suggestedActions = [
   {
-    title: "Cuales es el catalogo de productos ",
-    label: "de la compañia?",
-    action: "Cuales es el catalogo de productos de la compañia?",
+    title: "¿Qué es la integración M2M que ofrecen",
+    label: "y para qué sirve",
+    action: "¿Qué es la integración M2M que ofrecen y para qué sirve?",
   },
   {
-    title: "Tell me a fun fact",
-    label: "about pandas",
-    action: "Tell me an interesting fact about pandas",
+    title: "1. ¿Qué tipo de tableros eléctricos diseña?",
+    label: " e implementa INGE LEAN",
+    action:
+      "1. ¿Qué tipo de tableros eléctricos diseña? e implementa INGE LEAN",
   },
 ];
 
