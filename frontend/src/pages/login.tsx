@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 import { Toaster, toast } from "sonner";
 import { motion } from "framer-motion";
 
 export function Login() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate(location.state?.from?.pathname || "/chat", { replace: true });
+    }
+  }, [user, navigate, location]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
