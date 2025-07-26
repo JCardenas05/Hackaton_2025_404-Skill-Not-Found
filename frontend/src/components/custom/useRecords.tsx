@@ -1,6 +1,6 @@
 // src/components/custom/useRecords.ts
-import { useEffect, useState } from 'react';
-import { supabase } from '@/supabaseClient';
+import { useEffect, useState } from "react";
+import { supabase } from "@/supabaseClient";
 
 export interface RecordRow {
   cliente: string | null;
@@ -14,19 +14,20 @@ export function useRecords() {
   async function fetchRecords() {
     /* Trae las 100 conversaciones más recientes, con cliente */
     const { data, error } = await supabase
-      .from('conversaciones')
-      .select('tema_principal, sentimiento_global, usuarios(nombre)')
-      .order('inicio', { ascending: false })
+      .from("conversaciones")
+      .select("tema_principal, sentimiento_global, usuarios(nombre)")
+      .order("inicio", { ascending: false })
       .limit(100);
 
     if (error) {
-      console.error('Error fetch registros', error);
+      console.error("Error fetch registros", error);
       return;
     }
 
     setData(
       (data ?? []).map((row) => ({
-        cliente: row.usuarios?.nombre ?? 'Sin nombre',
+        // @ts-expect-error: 'nombre' puede ser null
+        cliente: row.usuarios?.nombre ?? "Sin nombre",
         tema: row.tema_principal,
         sentimiento: row.sentimiento_global,
       }))

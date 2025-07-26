@@ -6,7 +6,6 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { Login } from "./pages/login";
 import { AuthProvider } from "./context/AuthContext";
 import { Selection } from "./pages/selection";
-import { Records } from "./pages/records";
 import { SignUp } from "./pages/signup";
 import { Registros } from "./pages/Registros/Registros";
 
