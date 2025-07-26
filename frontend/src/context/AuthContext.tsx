@@ -12,7 +12,7 @@ import { getUserRole } from "@/services/userServices";
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
-  signOut: () => Promise<void>;
+  // signOut: () => Promise<void>;
   isAdmin: boolean | undefined;
 }
 
@@ -48,10 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => data.subscription.unsubscribe();
   }, []);
 
-  const signOut = () => supabase.auth.signOut();
+  // const signOut = () => supabase.auth.signOut();
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut, isAdmin }}>
+    <AuthContext.Provider value={{ user, loading, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

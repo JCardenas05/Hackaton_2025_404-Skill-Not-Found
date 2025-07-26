@@ -13,7 +13,7 @@ export function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
 
   /* already logged-in? redirect */
   if (user) {
@@ -30,7 +30,7 @@ export function Login() {
     setLoading(true);
     const toastId = toast.loading("Logging in…");
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });

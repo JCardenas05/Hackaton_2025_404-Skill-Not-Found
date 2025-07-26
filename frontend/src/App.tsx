@@ -12,15 +12,20 @@ import { SignUp } from "./pages/signup";
 function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <div className="w-full h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-          <Routes>
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </div>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <div className="w-full h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+            <Routes>
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/selection" element={<Selection />} />
+              <Route path="/records" element={<Records />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Routes>
+          </div>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

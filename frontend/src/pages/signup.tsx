@@ -13,7 +13,7 @@ export function SignUp() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
 
   if (user) {
     const target = "/selection";
@@ -29,7 +29,7 @@ export function SignUp() {
     setLoading(true);
     const toastId = toast.loading("Logging in…");
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       toast.error(error.message, { id: toastId });
