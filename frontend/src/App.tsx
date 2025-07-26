@@ -4,17 +4,26 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./pages/DashBoard/DashBoard";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Login } from "./pages/login";
+import { AuthProvider } from "./context/AuthContext";
+import { Selection } from "./pages/selection";
+import { Records } from "./pages/records";
+import { SignUp } from "./pages/signup";
 
 function App() {
   return (
     <ThemeProvider>
       <Router>
         <div className="w-full h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-          <Routes>
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
+          <AuthProvider>
+            <Routes>
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/" element={<Login />} />
+              <Route path="/selection" element={<Selection />} />
+              <Route path="/dashboard" element={<div>Dashboard</div>} />
+              <Route path="/records" element={<Records />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Routes>
+          </AuthProvider>
         </div>
       </Router>
     </ThemeProvider>

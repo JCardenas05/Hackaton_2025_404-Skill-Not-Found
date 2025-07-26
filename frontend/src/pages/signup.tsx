@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Toaster, toast } from "sonner";
 import { motion } from "framer-motion";
 
-export function Login() {
+export function SignUp() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,6 @@ export function Login() {
   const location = useLocation();
   const { user, isAdmin } = useAuth();
 
-  /* already logged-in? redirect */
   if (user) {
     const target = "/selection";
     return (
@@ -30,10 +29,7 @@ export function Login() {
     setLoading(true);
     const toastId = toast.loading("Logging in…");
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       toast.error(error.message, { id: toastId });
@@ -157,20 +153,10 @@ export function Login() {
                   Logging in…
                 </>
               ) : (
-                "Iniciar sesión"
+                "Registrar"
               )}
             </button>
           </form>
-
-          <p className="mt-4 text-center text-sm text-[hsl(var(--muted-foreground))]">
-            ¿No tienes cuenta?{" "}
-            <a
-              href="/signup"
-              className="font-medium underline hover:text-[hsl(var(--primary))]"
-            >
-              Regístrate
-            </a>
-          </p>
         </motion.div>
       </main>
     </>
