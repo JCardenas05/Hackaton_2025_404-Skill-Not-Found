@@ -9,7 +9,7 @@ import re
 from typing import Tuple, Optional
 
 #Configuracion de la apikey y clase websocket
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY", "TU_OPENAI_API_KEY"))
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 connection = ConnectionManager()
 app = FastAPI()
 
