@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Login } from "./pages/login";
 import { AuthProvider } from "./context/AuthContext";
+import { Selection } from "./pages/selection";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Routes>
               <Route path="/chat" element={<Chat />} />
               <Route path="/" element={<Login />} />
+              <Route path="/selection" element={<Selection />} />
             </Routes>
           </AuthProvider>
         </div>

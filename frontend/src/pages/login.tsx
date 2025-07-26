@@ -11,13 +11,13 @@ export function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      navigate(location.state?.from?.pathname || "/chat", { replace: true });
-    }
-  }, [user, navigate, location]);
+    if (!user || isAdmin === undefined) return;
+    const target = isAdmin ? "/selection" : "/chat";
+    navigate(location.state?.from?.pathname || target, { replace: true });
+  }, [user, isAdmin, navigate, location]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -146,6 +146,10 @@ export function Login() {
               )}
             </button>
           </form>
+
+          <p className="mt-2 text-center text-sm text-red-500/80">
+            Un enlace sera enviado a sus correos desde Supabase
+          </p>
         </motion.div>
       </main>
     </>

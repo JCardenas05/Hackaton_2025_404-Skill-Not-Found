@@ -20,7 +20,8 @@ export const Overview = () => {
             <MessageCircle size={44} />
           </p>
           <p>
-            Bienvenidos a el chatbot de <strong>Ingelab</strong>
+            Bienvenidos a el chatbot de{" "}
+            <strong className="text-orange-500">Inge Lean</strong>
             <br />
             tu asistente virtual para resolver tus dudas y preguntas.
             <br />
