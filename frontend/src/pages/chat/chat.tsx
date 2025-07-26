@@ -12,7 +12,7 @@ import { useAuth } from "@/context/AuthContext";
 import { v4 as uuidv4 } from "uuid";
 import { Navigate, useLocation } from "react-router-dom";
 
-const socket = new WebSocket("ws://localhost:8090"); //change to your websocket endpoint
+const socket = new WebSocket("ws://localhost:8090/ws/chat"); //change to your websocket endpoint
 
 export function Chat() {
   const { user, loading } = useAuth();
@@ -87,7 +87,7 @@ export function Chat() {
     }
   }
 
-  return user ? (
+  return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
       <Header />
       <div
@@ -113,7 +113,5 @@ export function Chat() {
         />
       </div>
     </div>
-  ) : (
-    <Navigate to="/" replace state={{ from: location }} />
-  );
+  ) 
 }
