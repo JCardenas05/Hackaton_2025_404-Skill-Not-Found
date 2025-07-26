@@ -25,6 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      console.log("Session:", session);
       setUser(session?.user ?? null);
       setLoading(false);
       if (session?.user) {
@@ -34,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { data } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
+        console.log("Auth state changed:", _event, session);
         setUser(session?.user ?? null);
         if (session?.user) {
           setIsAdmin(await getUserRole(session.user.id));

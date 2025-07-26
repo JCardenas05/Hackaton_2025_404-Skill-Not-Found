@@ -16,6 +16,7 @@ const socket = new WebSocket("ws://localhost:8090/ws/chat"); //change to your we
 
 export function Chat() {
   const { user, loading } = useAuth();
+  console.log("User in chat:", user, "Loading:", loading);
   const location = useLocation();
 
   const [messagesContainerRef, messagesEndRef] =
@@ -87,7 +88,7 @@ export function Chat() {
     }
   }
 
-  return (
+  return user ? (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
       <Header />
       <div
@@ -113,5 +114,7 @@ export function Chat() {
         />
       </div>
     </div>
-  ) 
+  ) : (
+    <Navigate to="/" replace state={{ from: location }} />
+  );
 }

@@ -6,6 +6,7 @@ import { Login } from "./pages/login";
 import { AuthProvider } from "./context/AuthContext";
 import { Selection } from "./pages/selection";
 import { Records } from "./pages/records";
+import { SignUp } from "./pages/signup";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/selection" element={<Selection />} />
               <Route path="/dashboard" element={<div>Dashboard</div>} />
               <Route path="/records" element={<Records />} />
+              <Route path="/signup" element={<SignUp />} />
             </Routes>
           </AuthProvider>
         </div>
