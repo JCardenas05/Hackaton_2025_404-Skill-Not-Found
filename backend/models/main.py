@@ -1,40 +1,85 @@
 import openai
-from fastapi import FastAPI,WebSocket, Request
-from pydantic import BaseModel
-from contexto import EMPRESA_CONTEXT
-from server import ConnectionManager
 import os
+import httpx
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Query
+from textblob import TextBlob
+import jwt
+from datetime import datetime
 import json
-import re
-from typing import Tuple, Optional
+from server import ConnectionManager
+from context import EMPRESA_CONTEXT
 
-#Configuracion de la apikey y clase websocket
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY", "TU_OPENAI_API_KEY"))
-connection = ConnectionManager()
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY", "OPENAI_API_KEY"))
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_API_KEY = os.getenv("SUPABASE_API_KEY")
+SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
+SUPABASE_JWT_ALGORITHM = "HS256"
+SUPABASE_TABLE = "conversaciones"
 app = FastAPI()
 
+conversations = {}
 
-json_pattern = re.compile(r'---[\s\S]*$')
+async def get_main_topic(historial):
+    user_messages = " ".join([m[6:] for m in historial if m.startswith("User: ")])
+    prompt = [
+        {"role": "system", "content": "Eres un analista. Resume en una sola frase el tema principal de esta conversación:"},
+        {"role": "user", "content": user_messages}
+    ]
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=prompt,
+            temperature=0.0,
+            max_tokens=80
+        )
+        topic = response.choices[0].message.content.strip()
+    except Exception:
+        topic = "No fue posible identificar el tema"
+    return topic
 
-def split_message(raw):
-    """
-    return  (texto_visible, json_dict)
-    """
-    match = json_pattern.search(raw)
-    if not match:
+async def sent_info_database(user_id: str, historial: list, inicio: str, fin: str):
+    mensajes_usuario = [m[6:] for m in historial if m.startswith("User: ")]
+    if mensajes_usuario:
+        scores = [TextBlob(m).sentiment.polarity for m in mensajes_usuario]
+        avg_score = sum(scores) / len(scores)
+        sentimiento = (
+            "positivo" if avg_score > 0.1 else "negativo" if avg_score < -0.1 else "neutral"
+        )
+    else:
+        avg_score, sentimiento = 0, "neutral"
 
-        return raw.strip(), None
-    
-    json_str = match.group(0).strip()
-    answer_user = raw[: match.start()].strip()
-    return answer_user, json_str
+    # Obtener tema principal
+    tema_principal = await get_main_topic(historial)
+
+    data = {
+        "usuario_id": user_id,
+        "sentimiento_global": sentimiento,
+        "puntaje_sentimiento": avg_score,
+        "inicio": inicio,
+        "fin": fin,
+        "tema_principal": tema_principal,
+    }
+    url = f"{SUPABASE_URL}/rest/v1/{SUPABASE_TABLE}"
+    headers = {
+        "apikey": SUPABASE_API_KEY,
+        "Authorization": f"Bearer {SUPABASE_API_KEY}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+    }
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(url, headers=headers, json=data)
+        resp.raise_for_status()
 
 @app.websocket("/ws/chat")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket, token):
+    user_id=token
     await websocket.accept()
+    conversations.setdefault(user_id, [])
+    inicio = datetime.utcnow().isoformat()
     try:
         while True:
             data = await websocket.receive_text()
+            conversations[user_id].append(f"User: {data}")
             prompt = [
                 {"role": "system", "content": EMPRESA_CONTEXT},
                 {"role": "user", "content": data}
@@ -46,13 +91,13 @@ async def websocket_endpoint(websocket: WebSocket):
                 max_tokens=400
             )
             answer = response.choices[0].message.content
-            answer,json_info=split_message(answer)
-            print("JSON --->",json_info)
+            conversations[user_id].append(f"Bot: {answer}")
             await websocket.send_text(answer)
+    except WebSocketDisconnect:
+        historial = conversations.get(user_id, [])
+        fin = datetime.utcnow().isoformat()
+        await sent_info_database(user_id, historial, inicio, fin)
+        conversations.pop(user_id, None)
     except Exception as e:
         await websocket.send_text(f"Error: {str(e)}")
         await websocket.close()
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8090))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

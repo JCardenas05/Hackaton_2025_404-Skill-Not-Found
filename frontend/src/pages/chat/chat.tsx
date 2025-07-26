@@ -1,10 +1,11 @@
 import { ChatInput } from "@/components/custom/chatinput";
+
 import {
   PreviewMessage,
   ThinkingMessage,
 } from "../../components/custom/message";
 import { useScrollToBottom } from "@/components/custom/use-scroll-to-bottom";
-import { useState, useRef } from "react";
+import { useEffect,useState, useRef } from "react";
 import { message } from "../../interfaces/interfaces";
 import { Overview } from "@/components/custom/overview";
 import { Header } from "@/components/custom/header";
@@ -12,12 +13,25 @@ import { useAuth } from "@/context/AuthContext";
 import { v4 as uuidv4 } from "uuid";
 import { Navigate, useLocation } from "react-router-dom";
 
-const socket = new WebSocket("ws://localhost:8090/ws/chat"); //change to your websocket endpoint
 
 export function Chat() {
   const { user, loading } = useAuth();
   console.log("User in chat:", user, "Loading:", loading);
+  const [socket, setSocket] = useState<WebSocket | null>(null);
   const location = useLocation();
+  console.log(user);
+  useEffect(() => {
+  if (user?.id) {
+    const ws = new WebSocket(`ws://127.0.0.1:8090/ws/chat?token=${user.id}`);
+    setSocket(ws);
+
+    return () => {
+      ws.close();
+    };
+  }
+}, [user?.id]);
+  
+
 
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
