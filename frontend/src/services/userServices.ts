@@ -1,4 +1,3 @@
-// src/lib/getUserRole.ts
 import { supabase } from "../supabaseClient";
 
 export async function getUserRole(userId: string): Promise<boolean> {
