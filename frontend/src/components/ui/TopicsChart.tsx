@@ -1,8 +1,17 @@
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer
-} from 'recharts';
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-export function TopicsChart({ data }: { tema: string; total: number }[]) {
+export function TopicsChart({
+  data,
+}: {
+  data: { tema: string; total: number }[];
+}) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={data}>
