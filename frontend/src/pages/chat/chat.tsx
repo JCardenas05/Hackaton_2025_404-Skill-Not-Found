@@ -12,7 +12,9 @@ import { useAuth } from "@/context/AuthContext";
 import { v4 as uuidv4 } from "uuid";
 import { Navigate, useLocation } from "react-router-dom";
 
-const socket = new WebSocket("ws://localhost:8090/ws/chat"); //change to your websocket endpoint
+const socket = new WebSocket(
+  "wss://hackaton-2025-404-skill-not-found.onrender.com/ws/chat "
+); //change to your websocket endpoint
 
 export function Chat() {
   const { user, loading } = useAuth();
