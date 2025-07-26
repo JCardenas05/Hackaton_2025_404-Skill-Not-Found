@@ -1,0 +1,12 @@
+id,conversacion_id,rol,contenido,ts,latencia_ms,intent,sentimiento
+1,3af9d0ee-6b7d-453d-9bf6-8a1b2e5a932d,user,"¿Diseñan tableros eléctricos a la medida?",2025-08-04T13:00:05Z,260,intro,neutral
+2,3af9d0ee-6b7d-453d-9bf6-8a1b2e5a932d,assistant,"Sí, diseñamos e implementamos tableros de maniobra y control adaptados a su proceso.",2025-08-04T13:00:07Z,520,faq_tableros,positivo
+3,cf4e8c8a-0d72-46ea-aaf0-1c96b1ac13dd,user,"¿Cada cuánto puedo recibir lecturas de temperatura?",2025-08-04T14:20:02Z,300,faq_intervalo,neutral
+4,cf4e8c8a-0d72-46ea-aaf0-1c96b1ac13dd,assistant,"Nuestro sistema de telemetría registra datos con intervalos desde 1 minuto.",2025-08-04T14:20:04Z,480,faq_intervalo,positivo
+5,c6b77276-9f2b-4d10-b06e-d0a3b8f4ce3a,user,"¿Qué protocolos soportan en la integración M2M?",2025-08-04T15:05:03Z,310,faq_m2m,neutral
+6,335b6619-1e15-4d9f-a160-b72b2c7995d3,user,"Necesito un datalogger para un laboratorio, ¿pueden ayudarme?",2025-08-04T15:50:03Z,270,lead_datalogger,positivo
+7,a9e20a28-4a63-4bb9-9c70-350f93adb7dd,user,"¿Desarrollan aplicaciones con análisis de datos en la nube?",2025-08-04T16:25:05Z,290,faq_software,neutral
+8,a9e20a28-4a63-4bb9-9c70-350f93adb7dd,assistant,"Sí, creamos soluciones cloud con machine learning y dashboards de analítica.",2025-08-04T16:25:06Z,530,faq_software,positivo
+9,c6b77276-9f2b-4d10-b06e-d0a3b8f4ce3a,assistant,"Integramos protocolos Modbus TCP, MQTT y HTTP REST.",2025-08-04T15:05:05Z,500,faq_m2m,positivo
+10,335b6619-1e15-4d9f-a160-b72b2c7995d3,assistant,"Claro, nuestro datalogger registra temperatura y humedad en tiempo real.",2025-08-04T15:50:05Z,450,lead_datalogger,positivo
+

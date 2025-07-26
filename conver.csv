@@ -1,0 +1,6 @@
+id,usuario_id,tema_principal,sentimiento_global,inicio,fin,respuestas_correctas,total_respuestas
+3af9d0ee-6b7d-453d-9bf6-8a1b2e5a932d,1b7e2c2e-4f11-45e4-9e2c-c77c2011dce1,Control Eléctrico,positivo,2025-08-04T13:00:00Z,2025-08-04T13:12:00Z,6,6
+cf4e8c8a-0d72-46ea-aaf0-1c96b1ac13dd,8d0bba95-2e4c-4499-b6e7-b8d02dc01a7a,Telemetría,neutral,2025-08-04T14:20:00Z,2025-08-04T14:31:00Z,4,5
+c6b77276-9f2b-4d10-b06e-d0a3b8f4ce3a,9b640a0d-18ba-4fb7-bef9-5f28edfd9c0d,Integración M2M,positivo,2025-08-04T15:05:00Z,2025-08-04T15:18:30Z,5,5
+335b6619-1e15-4d9f-a160-b72b2c7995d3,2cd3e1fa-5af0-4219-9cfd-3dcb30982f0f,Datalogger,positivo,2025-08-04T15:50:00Z,2025-08-04T16:00:40Z,5,5
+a9e20a28-4a63-4bb9-9c70-350f93adb7dd,f4f1d959-47e2-496d-97b8-347b7eb0d05e,Software & Analítica,neutral,2025-08-04T16:25:00Z,2025-08-04T16:34:10Z,4,6
