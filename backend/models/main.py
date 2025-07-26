@@ -8,17 +8,17 @@ from datetime import datetime
 import json
 from server import ConnectionManager
 from context import EMPRESA_CONTEXT
-
+from dotenv import load_dotenv
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY", "OPENAI_API_KEY"))
+load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_API_KEY = os.getenv("SUPABASE_API_KEY")
-SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
 SUPABASE_JWT_ALGORITHM = "HS256"
 SUPABASE_TABLE = "conversaciones"
 app = FastAPI()
 
 conversations = {}
-
+print(SUPABASE_URL,SUPABASE_API_KEY,os.getenv("OPENAI_API_KEY", "OPENAI_API_KEY"))
 async def get_main_topic(historial):
     user_messages = " ".join([m[6:] for m in historial if m.startswith("User: ")])
     prompt = [
@@ -91,6 +91,7 @@ async def websocket_endpoint(websocket: WebSocket, token):
                 max_tokens=400
             )
             answer = response.choices[0].message.content
+            print(answer)
             conversations[user_id].append(f"Bot: {answer}")
             await websocket.send_text(answer)
     except WebSocketDisconnect:
